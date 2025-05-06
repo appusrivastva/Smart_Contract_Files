@@ -16,6 +16,12 @@ contract LPToken is ERC20 {
         require(msg.sender == pool, "Only pool can mint");
         _mint(to, amount);
     }
+
+    function burn(address from, uint256 amount) external {
+    require(msg.sender == pool, "Only pool can burn");
+    _burn(from, amount);
+}
+
 }
 
 // Liquidity Pool Contract
@@ -27,11 +33,19 @@ contract LiquidityPool {
     uint256 public reserveA;
     uint256 public reserveB;
     uint256 public expextedSlippage;
+    uint public  feePercentage=3;
     address public owner;
 
     modifier onlyOwner() {
         require(msg.sender == owner, "Not authorized");
         _;
+    }
+    
+    constructor(address _tokenA, address _tokenB) {
+        tokenA = IERC20(_tokenA);
+        tokenB = IERC20(_tokenB);
+        lpToken = new LPToken(); // deploy LP token
+        owner = msg.sender;
     }
 
     // slipage set which is 5 -> 5%
@@ -40,12 +54,6 @@ contract LiquidityPool {
         expextedSlippage = _expectedSlipage;
     }
 
-    constructor(address _tokenA, address _tokenB) {
-        tokenA = IERC20(_tokenA);
-        tokenB = IERC20(_tokenB);
-        lpToken = new LPToken(); // deploy LP token
-        owner = msg.sender;
-    }
 
     function addLiquidity(uint256 amountA, uint256 amountB) public returns (uint256 liquidity) {
         require(amountA > 0 && amountB > 0, "Invalid amounts");
@@ -60,7 +68,7 @@ contract LiquidityPool {
             // First LP
             liquidity = sqrt(amountA * amountB);
         } else {
-            // Proportional LP token minting
+        
             uint256 liquidityFromA = (amountA * totalSupply) / reserveA;
             uint256 liquidityFromB = (amountB * totalSupply) / reserveB;
             liquidity = min(liquidityFromA, liquidityFromB);
@@ -76,12 +84,10 @@ contract LiquidityPool {
         reserveB += amountB;
     }
 
-    // Utility: Minimum of two values
     function min(uint256 x, uint256 y) internal pure returns (uint256) {
         return x < y ? x : y;
     }
 
-    // Utility: Square root using Babylonian method
     function sqrt(uint y) internal pure returns (uint z) {
         if (y > 3) {
             z = y;
@@ -104,9 +110,12 @@ contract LiquidityPool {
     function swapAtoB(uint256 amountIn, uint256 expectSlippage) public returns (uint256) {
         require(amountIn > 0, "Invalid input amount");
         require(expextedSlippage > 0, "Expected slippage not set");
-        require(expectSlippage > checkSlippage(amountIn), "actual slippage is too high");
+        uint256 fee = (amountIn * feePercentage) / 100;
+        uint256 amountInAfterFee = amountIn - fee;
+        require(expectSlippage > checkSlippage(amountInAfterFee), "actual slippage is too high");
 
-        uint256 newReserveA = reserveA + amountIn;
+
+        uint256 newReserveA = reserveA + amountInAfterFee;
         uint256 k = reserveA * reserveB;
         uint256 newReserveB = k / newReserveA;
         uint256 amountOut = reserveB - newReserveB;
@@ -124,9 +133,12 @@ contract LiquidityPool {
     function swapBtoA(uint256 amountIn, uint256 expectSlippage) public returns (uint256) {
         require(amountIn > 0, "Invalid input amount");
         require(expextedSlippage > 0, "Expected slippage not set");
-        require(expectSlippage > checkSlippageB(amountIn), "actual slippage is too high");
+        uint256 fee = (amountIn * feePercentage) / 100;
+        uint256 amountInAfterFee = amountIn - fee;
+        require(expectSlippage > checkSlippageB(amountInAfterFee), "actual slippage is too high");
 
-        uint256 newReserveB = reserveB + amountIn;
+
+        uint256 newReserveB = reserveB + amountInAfterFee;
         uint256 k = reserveA * reserveB;
         uint256 newReserveA = k / newReserveB;
         uint256 amountOut = reserveA - newReserveA;
@@ -169,8 +181,11 @@ contract LiquidityPool {
         uint256 slippagePercent = 100 - ((amountOut * 100) / expectAmount);
         return slippagePercent;
     }
+    function getReserves() public view returns (uint256, uint256) {
+    return (reserveA, reserveB);
+}
 
-    // Get expected token B amount for a given amount of token A
+
     function getExpectedTokenB(uint256 amountIn) public view returns (uint256 expectedOut) {
         require(amountIn > 0, "Invalid amount");
 
@@ -181,7 +196,6 @@ contract LiquidityPool {
         return expectedOut;
     }
 
-    // Get expected token A amount for a given amount of token B
     function getExpectedTokenA(uint256 amountIn) public view returns (uint256 expectedOut) {
         require(amountIn > 0, "Invalid amount");
 
@@ -191,4 +205,44 @@ contract LiquidityPool {
         expectedOut = (amountIn * 1e18) / ratio;
         return expectedOut;
     }
+
+
+    //remove liquidity 
+    function removeLiquidity(uint256 liquidity) public {
+    require(liquidity > 0, "Invalid liquidity amount");
+    require(lpToken.balanceOf(msg.sender) >= liquidity, "Not enough LP tokens");
+
+    uint256 totalSupply = lpToken.totalSupply();
+
+    // Calculate the amount of Token A and Token B to return
+    uint256 amountA = (liquidity * reserveA) / totalSupply;
+    uint256 amountB = (liquidity * reserveB) / totalSupply;
+
+    require(amountA > 0 && amountB > 0, "Insufficient amount to withdraw");
+
+    // // Burn LP tokens
+    // lpToken.transferFrom(msg.sender, address(this), liquidity);
+    // lpToken.mint(address(0), liquidity); // effectively burns LP tokens (minting to 0 address)
+
+    lpToken.burn(msg.sender, liquidity);
+
+    
+
+    // Update reserves
+    reserveA -= amountA;
+    reserveB -= amountB;
+
+    // Transfer tokens back to the user
+    require(tokenA.transfer(msg.sender, amountA), "Token A transfer failed");
+    require(tokenB.transfer(msg.sender, amountB), "Token B transfer failed");
+}
+
+    function getUserLPBalance(address user) public view returns (uint256) {
+    return lpToken.balanceOf(user);
+}
+function getLPTokenAddress() public view returns (address) {
+    return address(lpToken);
+}
+
+
 }
