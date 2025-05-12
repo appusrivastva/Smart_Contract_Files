@@ -1,0 +1,45 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"Inheritance/MultilevelInheritance.sol": "MultilevelInheritance"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"Inheritance/MultilevelInheritance.sol": {
+			"keccak256": "0xfc3f15a3c91cf5843cf108b37f07dda130757c84da22a2499bb515a52904c73f",
+			"license": "GPL-3.0",
+			"urls": [
+				"bzz-raw://9aeeb2d58b7abc3362a055d8d3199ad97660d35c7ad7865cd81261aa63430105",
+				"dweb:/ipfs/QmWqED2qbQvXYJMccW47PaZ3tH4X1271fSvwmPmoAD5MEV"
+			]
+		}
+	},
+	"version": 1
+}

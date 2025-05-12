@@ -1,0 +1,109 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_logicAddress",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [],
+				"name": "logicAddress",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "num",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_newLogic",
+						"type": "address"
+					}
+				],
+				"name": "setLogic",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "n",
+						"type": "uint256"
+					}
+				],
+				"name": "setNum",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"Ether/DelegateCall.sol": "Proxy"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"Ether/DelegateCall.sol": {
+			"keccak256": "0xfa9805e0ee97e15cf317b4f73e5e0981bcc21e9bc0739b313569a1d96ba3e06d",
+			"license": "GPL-3.0",
+			"urls": [
+				"bzz-raw://a40679a2bc30a872fd923feaaf364d1e46d16b061b9a6237b5e6224d4c342bf2",
+				"dweb:/ipfs/QmZ2v3VAjAewEEwtiXg2Ru22b3KPB7cb313g88WLNJ7n4C"
+			]
+		}
+	},
+	"version": 1
+}

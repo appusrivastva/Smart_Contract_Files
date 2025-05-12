@@ -1,0 +1,75 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"stateMutability": "payable",
+				"type": "fallback"
+			},
+			{
+				"inputs": [],
+				"name": "getBal",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"Ether/ReceiveEther.sol": "ReceiveEther"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"Ether/ReceiveEther.sol": {
+			"keccak256": "0x7254b35c26fea46e3b43b1549c4b6312813d9f780fca8f4dc49c3bda4f56cc1c",
+			"license": "GPL-3.0",
+			"urls": [
+				"bzz-raw://b79d1f3f53f310fc2e661e70c7771b45611fdeb30c24f4b53909c992584ac38f",
+				"dweb:/ipfs/QmShSgMtN3QEaGmFuAxwibshzfLmgjDV8oj3tEmTm8c3Kp"
+			]
+		},
+		"Ether/SendingEther.sol": {
+			"keccak256": "0xf00b22b15bf530277d977509178fa7f451f875b3865b66b4886719425bae40cc",
+			"license": "GPL-3.0",
+			"urls": [
+				"bzz-raw://da2f3e3a02911956aafebc99049c38d00c8efaf9a74e5a325d5b4beeda2ce03d",
+				"dweb:/ipfs/QmcBXosuwWxt3y3qmwqcjAzDrZKaoUgA3V1vu5VnE7DVrT"
+			]
+		}
+	},
+	"version": 1
+}

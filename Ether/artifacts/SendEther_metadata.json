@@ -1,0 +1,73 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address payable",
+						"name": "_recipient",
+						"type": "address"
+					}
+				],
+				"name": "sendEth",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "sendEthbyCall",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "sendEther",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"Ether/SendingEther.sol": "SendEther"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"Ether/SendingEther.sol": {
+			"keccak256": "0xa21059ff902ca16bde30a62680e50d8a2d7403eeac668a4d334d8bb7da28cead",
+			"license": "GPL-3.0",
+			"urls": [
+				"bzz-raw://cfb9550db362e8b62ff8ed13107089e8544e547a66725d379fdbe4a01ef23892",
+				"dweb:/ipfs/QmaTiuE3ytv8CCon4TUs9vMisYH5oAYPs5kRdpaQGcFViy"
+			]
+		}
+	},
+	"version": 1
+}
