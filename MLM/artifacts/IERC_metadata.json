@@ -1,0 +1,45 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"MLM/ChainBoost.sol": "IERC"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"MLM/ChainBoost.sol": {
+			"keccak256": "0x2dc3c7773051445b5f00311a8cb6e5bd26149eb698797cd091a236c8a4cdcdc6",
+			"license": "GPL-3.0",
+			"urls": [
+				"bzz-raw://0ccfd28cf0f23286f89207e12b119ab0122c831861b9d2d8263456cdd8a604d3",
+				"dweb:/ipfs/Qmcd51dox3hR7khPH5idhCZTqWXvRwagzUJRzb9WzFLX2n"
+			]
+		}
+	},
+	"version": 1
+}
