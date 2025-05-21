@@ -90,7 +90,7 @@ contract GrowChain is ReentrancyGuard {
         newUser.registrationTime = block.timestamp;
 
         emit Registered(msg.sender, _referrer, block.timestamp);
-        distributeReferralIncome(_referrer);
+        distributeReferralIncome(_referrer,msg.sender);
     }
 
     function getUserDetails(address _user)
