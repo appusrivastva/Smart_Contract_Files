@@ -20,7 +20,7 @@ contract GrowChain is ReentrancyGuard {
     IERC20 public GNT;
     address public admin;
     bool public pause;
-    uint256 public REGISTRATION_FEE = 10 * 10**18;
+    uint256 public REGISTRATION_FEE = 100 * 10**18;
     uint256[5] public levelPercentage = [40, 20, 15, 10, 5];
     uint256 public maxReferralDepth = 5;
 
@@ -69,10 +69,6 @@ contract GrowChain is ReentrancyGuard {
         _;
     }
 
-    /**
-     * @notice Register a new user under a valid referrer
-     * @param _referrer Address of the referrer (must be already registered)
-     */
     function registration(address _referrer)
         external
         whenNotPaused
@@ -97,17 +93,6 @@ contract GrowChain is ReentrancyGuard {
         distributeReferralIncome(_referrer);
     }
 
-    /**
-     * @notice Get user details
-     * @param _user Address of the user
-     * @return referrer Referrer address
-     * @return directReferralIncome Total direct referral income
-     * @return referralCount Total direct referrals
-     * @return teamIncome Total income from team
-     * @return teamSize Total size of team (all levels)
-     * @return isRegistered If the user is registered
-     * @return registrationTime Timestamp of registration
-     */
     function getUserDetails(address _user)
         external
         view
@@ -133,13 +118,6 @@ contract GrowChain is ReentrancyGuard {
         );
     }
 
-    /**
-     * @notice Returns a paginated list of direct referrals
-     * @param _user Address of the user
-     * @param start Starting index
-     * @param limit Number of addresses to return
-     * @return Array of referral addresses
-     */
     function getDirectReferralsPaginated(
         address _user,
         uint256 start,
@@ -156,11 +134,6 @@ contract GrowChain is ReentrancyGuard {
         return result;
     }
 
-    /**
-     * @notice Get list of indirect referrals
-     * @param _user Address of the user
-     * @return Array of indirect referral addresses
-     */
     function getIndirectReferrals(address _user)
         external
         view
@@ -169,42 +142,24 @@ contract GrowChain is ReentrancyGuard {
         return users[_user].indirectReferrals;
     }
 
-    /**
-     * @notice Change the registration fee (only owner)
-     * @param _percentage New fee in whole numbers (e.g., 10 means 10 tokens)
-     */
     function changeRegistrationFee(uint256 _percentage) external onlybyAdmin {
         require(_percentage < 99, "Invalid percentage");
         REGISTRATION_FEE = _percentage * 10**18;
     }
 
-    /**
-     * @notice Pause the contract (only owner)
-     */
     function paused() external onlybyAdmin {
         pause = true;
     }
 
-    /**
-     * @notice Unpause the contract (only owner)
-     */
     function unpaused() external onlybyAdmin {
         pause = false;
     }
 
-    /**
-     * @notice Withdraw GNT tokens from contract (only owner)
-     * @param amount Amount of tokens to withdraw
-     */
     function withdraw(uint256 amount) external nonReentrant onlybyAdmin {
         GNT.transfer(admin, amount);
         emit Withdraw(admin, amount);
     }
 
-    /**
-     * @notice Transfer contract ownership to a new address
-     * @param _newOwner Address of the new owner
-     */
     function transferOwnership(address _newOwner) external onlybyAdmin {
         require(_newOwner != address(0), "Invalid new owner");
         address oldowner = admin;
@@ -212,54 +167,39 @@ contract GrowChain is ReentrancyGuard {
         emit OwnershipTransferred(oldowner, _newOwner);
     }
 
-    /**
-     * @notice Update the GNT token address (only owner)
-     * @param _token New token contract address
-     */
     function updateTokenAddress(address _token) external onlybyAdmin {
         require(_token != address(0), "Invalid token address");
         GNT = IERC20(_token);
         emit TokenUpdated(address(GNT), _token);
     }
 
-    /**
-     * @notice View the contract's GNT token balance
-     * @return GNT balance held by the contract
-     */
     function contractTokenBalance() external view returns (uint256) {
         return GNT.balanceOf(address(this));
     }
 
-    // Internal logic (no NatSpec needed for private/internal functions)
-    function distributeReferralIncome(address _referrer) internal {
-        address upline = _referrer;
+    function distributeReferralIncome(address _referrer, address newUser) internal {
+    address upline = _referrer;
 
-        for (
-            uint256 i = 0;
-            i < levelPercentage.length && i < maxReferralDepth;
-            i++
-        ) {
-            if (upline == address(0)) {
-                break;
-            }
-
-            uint256 reward = (REGISTRATION_FEE * levelPercentage[i]) / 100;
-            require(GNT.transfer(upline, reward), "Reward transfer failed");
-
-            emit IncomeDistributed(upline, i + 1, reward);
-
-            if (i == 0) {
-                users[upline].directReferralIncome += reward;
-                users[upline].directReferrals.push(msg.sender);
-                users[upline].referralCount++;
-            } else {
-                users[upline].teamIncome += reward;
-                users[upline].indirectReferrals.push(upline);
-            }
-            users[upline].teamSize++;
-            upline = users[upline].referrer;
+    for (uint256 i = 0; i < levelPercentage.length && i < maxReferralDepth; i++) {
+        if (upline == address(0)) {
+            break;
         }
+
+        uint256 reward = (REGISTRATION_FEE * levelPercentage[i]) / 100;
+        require(GNT.transfer(upline, reward), "Reward transfer failed");
+
+        emit IncomeDistributed(upline, i + 1, reward);
+
+        if (i == 0) {
+            users[upline].directReferralIncome += reward;
+            users[upline].directReferrals.push(newUser); // use newUser here
+            users[upline].referralCount++;
+        } else {
+            users[upline].teamIncome += reward;
+            users[upline].indirectReferrals.push(newUser); // use newUser here
+        }
+        users[upline].teamSize++;
+        upline = users[upline].referrer;
     }
 }
-
-// NatSpec documentation-> all public and external functions. NatSpec (Ethereum Natural Specification Format)
+}

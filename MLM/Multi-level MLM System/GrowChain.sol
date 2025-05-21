@@ -129,7 +129,7 @@ contract GrowChain is ReentrancyGuard {
                 users[upline].referralCount++;
             } else {
                 users[upline].teamIncome += reward;
-                users[upline].indirectReferrals.push(upline);
+                users[upline].indirectReferrals.push(msg.sender);
             }
             users[upline].teamSize++;
 

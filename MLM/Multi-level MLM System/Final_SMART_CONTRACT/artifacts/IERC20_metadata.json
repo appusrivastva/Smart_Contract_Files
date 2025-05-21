@@ -91,7 +91,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"MLM/Multi-level MLM System/GrowChain.sol": "IERC20"
+			"MLM/Multi-level MLM System/Final_SMART_CONTRACT/GrowChain.sol": "IERC20"
 		},
 		"evmVersion": "cancun",
 		"libraries": {},
@@ -113,12 +113,12 @@
 				"dweb:/ipfs/QmcYR3bd862GD1Bc7jwrU9bGxrhUu5na1oP964bDCu2id1"
 			]
 		},
-		"MLM/Multi-level MLM System/GrowChain.sol": {
-			"keccak256": "0x548521d2d6c18b46dd7c2c9afcffce609fd25a3e724f67d74150be8bf1a5d4c3",
+		"MLM/Multi-level MLM System/Final_SMART_CONTRACT/GrowChain.sol": {
+			"keccak256": "0xa0b08d162350aae515aeb8d002ffd99ed4f1ab19db437dc03b5d4fb3c883f5db",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://aae56e59314d6ba5e43d9ab3384722be69849796b58557bdbc6c6ba3d60e07d2",
-				"dweb:/ipfs/QmQr2BTL9oTaAZ1XQQzDDvfrqixW5WsiJMVuKSGcZYunHi"
+				"bzz-raw://54eb4012af3f6414866547cd356e3bfad4f2c7c7805dfdf480a59d1c4c7634fa",
+				"dweb:/ipfs/QmQMW9HYjNuG987MKFcSHsp4rkNUck9xnr6UdSkwGCUfrB"
 			]
 		}
 	},

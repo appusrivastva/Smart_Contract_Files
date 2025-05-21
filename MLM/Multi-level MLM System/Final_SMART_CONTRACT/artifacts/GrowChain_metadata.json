@@ -89,6 +89,25 @@
 				"anonymous": false,
 				"inputs": [
 					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "oldFee",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "newFee",
+						"type": "uint256"
+					}
+				],
+				"name": "RegistrationFeeUpdated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
 						"indexed": true,
 						"internalType": "address",
 						"name": "oldToken",
@@ -166,7 +185,7 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "_percentage",
+						"name": "_fee",
 						"type": "uint256"
 					}
 				],
@@ -186,6 +205,13 @@
 					}
 				],
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "emergencyWithdrawAll",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -448,18 +474,115 @@
 		],
 		"devdoc": {
 			"kind": "dev",
-			"methods": {},
+			"methods": {
+				"changeRegistrationFee(uint256)": {
+					"params": {
+						"_fee": "New fee in whole numbers (e.g., 10 means 10 tokens)"
+					}
+				},
+				"contractTokenBalance()": {
+					"returns": {
+						"_0": "GNT balance held by the contract"
+					}
+				},
+				"getDirectReferralsPaginated(address,uint256,uint256)": {
+					"params": {
+						"_user": "Address of the user",
+						"limit": "Number of addresses to return",
+						"start": "Starting index"
+					},
+					"returns": {
+						"_0": "Array of referral addresses"
+					}
+				},
+				"getIndirectReferrals(address)": {
+					"params": {
+						"_user": "Address of the user"
+					},
+					"returns": {
+						"_0": "Array of indirect referral addresses"
+					}
+				},
+				"getUserDetails(address)": {
+					"params": {
+						"_user": "Address of the user"
+					},
+					"returns": {
+						"directReferralIncome": "Total direct referral income",
+						"isRegistered": "If the user is registered",
+						"referralCount": "Total direct referrals",
+						"referrer": "Referrer address",
+						"registrationTime": "Timestamp of registration",
+						"teamIncome": "Total income from team",
+						"teamSize": "Total size of team (all levels)"
+					}
+				},
+				"registration(address)": {
+					"params": {
+						"_referrer": "Address of the referrer (must be already registered)"
+					}
+				},
+				"transferOwnership(address)": {
+					"params": {
+						"_newOwner": "Address of the new owner"
+					}
+				},
+				"updateTokenAddress(address)": {
+					"params": {
+						"_token": "New token contract address"
+					}
+				},
+				"withdraw(uint256)": {
+					"params": {
+						"amount": "Amount of tokens to withdraw"
+					}
+				}
+			},
 			"version": 1
 		},
 		"userdoc": {
 			"kind": "user",
-			"methods": {},
+			"methods": {
+				"changeRegistrationFee(uint256)": {
+					"notice": "Change the registration fee (only owner)"
+				},
+				"contractTokenBalance()": {
+					"notice": "View the contract's GNT token balance"
+				},
+				"getDirectReferralsPaginated(address,uint256,uint256)": {
+					"notice": "Returns a paginated list of direct referrals"
+				},
+				"getIndirectReferrals(address)": {
+					"notice": "Get list of indirect referrals"
+				},
+				"getUserDetails(address)": {
+					"notice": "Get user details"
+				},
+				"paused()": {
+					"notice": "Pause the contract (only owner)"
+				},
+				"registration(address)": {
+					"notice": "Register a new user under a valid referrer"
+				},
+				"transferOwnership(address)": {
+					"notice": "Transfer contract ownership to a new address"
+				},
+				"unpaused()": {
+					"notice": "Unpause the contract (only owner)"
+				},
+				"updateTokenAddress(address)": {
+					"notice": "Update the GNT token address (only owner)"
+				},
+				"withdraw(uint256)": {
+					"notice": "Withdraw GNT tokens from contract (only owner)"
+				}
+			},
 			"version": 1
 		}
 	},
 	"settings": {
 		"compilationTarget": {
-			"MLM/Multi-level MLM System/GrowChain.sol": "GrowChain"
+			"MLM/Multi-level MLM System/Final_SMART_CONTRACT/GrowChain.sol": "GrowChain"
 		},
 		"evmVersion": "cancun",
 		"libraries": {},
@@ -481,12 +604,12 @@
 				"dweb:/ipfs/QmcYR3bd862GD1Bc7jwrU9bGxrhUu5na1oP964bDCu2id1"
 			]
 		},
-		"MLM/Multi-level MLM System/GrowChain.sol": {
-			"keccak256": "0x548521d2d6c18b46dd7c2c9afcffce609fd25a3e724f67d74150be8bf1a5d4c3",
+		"MLM/Multi-level MLM System/Final_SMART_CONTRACT/GrowChain.sol": {
+			"keccak256": "0xa0b08d162350aae515aeb8d002ffd99ed4f1ab19db437dc03b5d4fb3c883f5db",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://aae56e59314d6ba5e43d9ab3384722be69849796b58557bdbc6c6ba3d60e07d2",
-				"dweb:/ipfs/QmQr2BTL9oTaAZ1XQQzDDvfrqixW5WsiJMVuKSGcZYunHi"
+				"bzz-raw://54eb4012af3f6414866547cd356e3bfad4f2c7c7805dfdf480a59d1c4c7634fa",
+				"dweb:/ipfs/QmQMW9HYjNuG987MKFcSHsp4rkNUck9xnr6UdSkwGCUfrB"
 			]
 		}
 	},

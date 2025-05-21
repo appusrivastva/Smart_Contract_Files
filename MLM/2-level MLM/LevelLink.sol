@@ -130,6 +130,7 @@ contract LevelLink is ReentrancyGuard {
     }
 
     // total income is that -> all indirect referrals -> income and  direct referral-> income
+    
 
     function getTotalIncome(address _user) public view returns (uint256) {
         User storage u = users[_user];
@@ -220,4 +221,5 @@ contract LevelLink is ReentrancyGuard {
         require(_token != address(0), "invalid new bst");
         LLT = IERC20(_token);
     }
+    
 }
