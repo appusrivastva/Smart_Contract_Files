@@ -44,11 +44,6 @@ contract Stacking {
         emit tokenLock(_userAddress, _nlntAmount);
     }
 
-
-
-
-
-
     // function claimToken() external {
     //     require(allStackDetails[msg.sender].start != 0, "NotLocked");
     //     require(allStackDetails[msg.sender].nlntAmount > 0, "no token");
@@ -76,35 +71,33 @@ contract Stacking {
             block.timestamp >= (l.start + cliff),
             "it's time to claim tokens"
         );
-//    abhi  tk time kitna pass hua
+        //    abhi  tk time kitna pass hua
         uint256 timePassed = block.timestamp - l.start;
 
-        // agar timepassed jada hoga jo totalduration di h usse 
+        // agar timepassed jada hoga jo totalduration di h usse
         // jb token lock kra tbse ab tk ka time
-        if(timePassed>totalDuration){
-            timePassed=totalDuration;
+        if (timePassed > totalDuration) {
+            timePassed = totalDuration;
         }
-        // cliff duration ke bad se time 
+        // cliff duration ke bad se time
 
-        uint vestingTime=timePassed-cliff;
+        uint256 vestingTime = timePassed - cliff;
 
         // kitna month pass hua after cliff duration
 
-        uint monthPass=vestingTime/30 days;
+        uint256 monthPass = vestingTime / 30 days;
 
         // monthpass-> 3 month
-        // ab cliff ke bad usko jitne v month honge uske acc usko % milega uske token 
-        uint totalVasted=(l.nlntAmount*10*monthPass)/100;
-        // first time claimamount->0 hoga 
+        // ab cliff ke bad usko jitne v month honge uske acc usko % milega uske token
+        uint256 totalVasted = (l.nlntAmount * 10 * monthPass) / 100;
+        // first time claimamount->0 hoga
         // second time claim krega toh  jitna totalvasted horha usme se claimamount minus krdenge jo ab second time vo claim krrha
-        
 
-
-        uint claimable=totalVasted-l.claimAmount;
+        uint256 claimable = totalVasted - l.claimAmount;
         require(claimable > 0, "No tokens available to claim yet");
-        //update  
+        //update
 
-        l.claimAmount +=claimable;
+        l.claimAmount += claimable;
         nlnt.transfer(msg.sender, claimable);
         emit claimedToken(msg.sender, claimable);
     }
